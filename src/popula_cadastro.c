@@ -41,16 +41,19 @@ int main(void) {
 
 	 for(i = 0; i < qtd_registros; i++){
 		 fgets(line, STR_BUFFER_SIZE, fregistros);
-		 //sscanf(line, "%9s%10s", vregistros.data[i].matricula, vregistros.data[i].nome);
-		 sscanf(line, "%9s", vregistros.data[i].matricula);
+		 sscanf(line, "%8s%14s", vregistros.data[i].matricula, vregistros.data[i].nome);
 	 }
 
-	 for(i = 0; i < qtd_registros; i++){
-		 //printf("%s-%s\n",vregistros.data[i].matricula, vregistros.data[i].nome);
-		 printf("%9s\n",vregistros.data[i].matricula);
+	 for(i = 0; i < vregistros.size; i++){
+		 printf("%s\t%s\n",vregistros.data[i].matricula, vregistros.data[i].nome);
 	 }
 
 	 fclose(fregistros);
+
+	 fregistros = fopen(REGISTROS_CSV_FILE, "wb");
+	 for(i = 0; i < vregistros.size; i++){
+		 printf("%s\t%s\n",vregistros.data[i].matricula, vregistros.data[i].nome);
+	 }
 
 	 //+++++++++++++++++++++++++++++++++++++++++++++++++
 	 puts("Populador de cadastro finalizado com sucesso");
