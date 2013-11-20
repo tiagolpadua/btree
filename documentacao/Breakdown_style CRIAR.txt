@@ -1,0 +1,122 @@
+				Breakdown_style CRIAR.txt
+
+
+Procedure CRIAR
+
+
+
+
+Especificações (exigências do MAIN e de DIVIDIR):
+
+	argumentos: void
+
+	retorno: ponteiro para página criada
+			campo lotação inicializado com 0
+			campos tipo CHAVE inicializados com '/0'
+			campos ponteiros inicializados com NULL
+
+
+
+Pressupostos (exigências deste procedure):
+
+	Já foram definidos os seguintes tipos:
+
+		CHAVE: array de char (string) de tamanho 9 (composição: 8 numerais em ASCII + '/0' ou apenas '/0')
+
+		PAGINA: struct com os seguintes campos:
+			
+				variável inteira (lotação)
+			
+			 	array do tipo CHAVE de tamanho m-1
+	
+				array de ponteiros para tipo PAGINA de tamanho m
+
+
+	variáveis globais: ordem da matriz (m)
+
+
+
+Breakdown style: algoritmo CRIAR
+
+
+
+
+Prototipo:	struct pagina *CRIAR(void)
+
+
+
+Descrição:
+
+
+	Aloca memória para uma variável do tipo PAGINA, inicializa os campos dessa variável e retorna ponteiro para tal.
+
+
+
+Algoritmo de CRIAR:
+
+
+
+	aloca memória para variável tipo PAGINA
+	inicializa os campos dessa variável
+	retorna ponteiro para essa variável
+	
+	
+	
+==================================================================================================================================	
+	
+	
+	
+	aloca memória (tamanho do record PAGINA)
+	inicializa os campos lotação, CHAVE[], PONTEIROS[]
+	retorna ponteiro para essa variável
+	
+	
+	
+==================================================================================================================================	
+	
+	
+	
+	aloca memória:
+		verifica se há memória disponível
+			a) struct PAGINA *p_nova_pagina = malloc ( sizeof(struct PAGINA) );
+			b) aviso de erro "NÃO HÁ MEMÓRIA DISPONÍVEL"
+					 "ARQUIVO DE ENTRADA MUITO GRANDE"
+					 "FAVOR FORNECER OUTROS ARQUIVOS"
+			    return NULL;
+
+	inicializa dos campos:
+		p_nova_pagina.lotacao = 0;
+
+		for(int ind=0; ind <= (m-2); ind++)
+			p_nova_pagina.CHAVE[ind] = '/0';
+
+		for(int ind=0; ind <= (m-1); ind++)
+			p_nova_pagina.PONTEIRO[ind] = NULL;
+
+	retorna ponteiro para nova página
+		return p_nova_pagina;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

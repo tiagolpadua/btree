@@ -1,0 +1,126 @@
+				Breakdown_style REDISTRIBUIR.txt
+
+
+Procedure REDISTRIBUIR
+
+
+
+
+Especificações (exigências do MAIN):
+
+	argumentos: ponteiro para página lotada, ponteiro para pagina receptora e chave a ser inserida
+
+	retorno: void    ????? (utilizar valor de retorno como codigo de erro?)
+
+	avisos em execução: ?????
+
+
+
+Pressupostos (exigências deste procedure):
+
+	nova_chave: variável tipo array de char (string) finalizada com '/0'
+
+	record pagina possui: 	chaves (existe sempre pelo menos a primeira chave)
+				1 ponteiro à esquerda (associado à primeira chave)
+				m-1 ponteiros à direita (1 associado a cada chave)
+				campo lotação devidamente atualizado
+
+	variáveis globais: ponteiro para página raiz
+			   ordem da matriz (m)
+
+
+
+OBSERVAÇÃO: ordem m	=> máximo m ponteiros
+			Como índices de arrays começam com zero:
+			=> maior índice para PONTEIRO[]: m-1
+
+			=> máximo m-1 chaves
+			Como índices de arrays começam com zero:
+			=> maior índice para CHAVE[]: m-2
+
+
+Breakdown style: algoritmo REDISTRIBUIR
+
+
+
+
+Prototipo:	(void)	REDISTRIBUIR(struct PAGINA *pagina_lotada, struct PAGINA *pagina_receptora, char *nova_chave)
+
+
+
+Descrição:
+
+
+	Verifica lotação de cada página (evita erro de argumento).
+	Distribui igualmente (ou o mais igual possível) a quantidade de chaves entre as duas páginas (recebidas por referência),
+já inserindo a nova_chave ordenadamente.
+	Faz as devidas atualizações dos campos das duas páginas.
+
+
+
+Algoritmo de REDISTRIBUIR:
+
+
+
+	Verifica lotação de pagina_lotada e lotação de pagina_receptora
+
+	Soma: lotacao da pag lotada + lotacao da pag receptora + 1 (nova_chave)
+	nova lotação de  pagina_lotada será: parte inteira de (soma/2)
+	nova lotação de pagina_receptora será:  (soma - valor anterior) 
+
+		
+	Atualiza campos:lotacao, CHAVES[], PONTEIRO[] das duas paginas
+
+
+	
+	
+	
+==================================================================================================================================	
+	
+	
+	
+	Verifica lotação de pagina_lotada e lotação de pagina_receptora
+	se pagina_lotada->lotacao == (m-1) && pagina_receptora->lotacao < (m-1) && nova_chave != '/0'
+		ok, continua
+	senão
+		"aviso de erro"
+		return;
+
+	total_de_chaves = pagina_lotada->lotacao + pagina_receptora->lotacao + 1;
+
+	nova lotação de  pagina_lotada será: parte inteira de (soma/2);
+	nova lotação de pagina_receptora será:  (soma - valor anterior); 
+
+	verifica posição correta de chave_nova
+		
+	Atualiza campos:lotacao, CHAVES[], PONTEIRO[] das duas paginas
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

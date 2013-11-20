@@ -1,0 +1,142 @@
+				Breakdown_style MAIN.txt
+
+
+
+Breakdown style: algoritmo MAIN
+
+
+
+	lê do arquivo
+-----------------------------
+	gera índice
+
+
+
+==================================================================================================================================
+
+
+
+	lê do arquivo
+	atualiza chave_primária
+	atualiza NRR
+-------------------------------------------
+	busca posição para inserir
+	insere
+	atualiza ponteiros
+
+
+
+==================================================================================================================================
+
+
+
+	abre o arquivo (modo leitura arquivo binário)
+	loop de leitura
+		atualiza chave_primária
+		atualiza NRR
+--------------------------------------------------------------
+	busca posição para inserir
+	verifica página cheia
+	insere
+	atualiza contador (chaves na página)
+	atualiza ponteiros
+
+
+
+==================================================================================================================================
+
+
+
+	abre o arquivo (Rb)
+	loop de leitura (verifica EOF)
+		atualiza chave_primária
+		atualiza NRR (contador de leituras)
+--------------------------------------------------------------
+	busca página correta para inserir
+	verifica lotação da página
+		há espaço:
+			insere
+			atualiza lotação
+		página lotada:
+			REDISTRIBUIÇÃO ou SPLITTING
+	atualiza ponteiros
+
+
+
+==================================================================================================================================
+
+
+
+	abre o arquivo (Rb)
+	loop de leitura (verifica EOF)
+		atualiza chave_primaria
+		verifica validade da chave (8 algarismos)
+		atualiza NRR (contador de leituras)
+--------------------------------------------------------------------
+	BUSCA (chave_primaria) -> retorna ponteiro para pagina
+	verifica lotação da página
+		há espaço:
+			insere
+			atualiza lotação
+			atualiza ponteiro
+		página lotada:
+			verifica siblings
+			REDISTRIBUIÇÃO ou DIVISÃO
+	atualiza ponteiros
+
+
+
+==================================================================================================================================
+
+
+
+	abre o arquivo (Rb)
+	cria página raiz
+	loop de leitura (verifica EOF)
+		atualiza chave_primaria
+		verifica validade da chave (8 algarismos)
+		atualiza contador de leituras
+		NRR recebe contador
+	final do loop
+		cria arquivo INDEX
+		salva árvore em INDEX
+		fecha arquivo INDEX
+		libera memoria		
+----------------------------------------------------------------------------------------------------------------------------------
+	BUSCA (chave_primaria) -> retorna ponteiro para pagina
+	verifica lotação da página
+		a) há espaço:
+			verifica posição relativa
+				a1) posição mais à direita:
+					insere chave_primaria
+					atualiza lotação
+					ponteiro à direita = NULL
+				a2) outra posição (inicial ou intermediária)
+					empurra chaves maiores e respectivos ponteiros
+					insere chave_primaria
+					atualiza lotação
+					atualiza ponteiros (arrasta de volta?)
+
+		b) página lotada:
+			verifica páginas irmãs
+				b1) existe vizinha com espaço
+					REDISTRIBUIR (ponteiro_pagina_retornado, ponteiro_pagina_vizinha, chave_primaria)
+				b2) ambas as vizinhas estão lotadas
+					DIVIDIR (ponteiro_pagina_retornado, chave_primaria)
+
+	
+
+
+
+Definir algoritmos dos seguintes procedures: 
+	
+		CRIAR, BUSCAR, REDISTRIBUIR, DIVIDIR
+
+
+
+
+
+
+
+
+

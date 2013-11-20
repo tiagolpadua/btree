@@ -1,0 +1,56 @@
+				Breakdown_style CRIAR.txt
+
+
+Procedure CRIAR
+
+
+
+Algoritmo de CRIAR:
+
+	
+	
+	
+	aloca memória:
+		verifica se há memória disponível
+			a) struct PAGINA *p_nova_pagina = malloc ( sizeof(struct PAGINA) );
+			b) aviso de erro "NÃO HÁ MEMÓRIA DISPONÍVEL"
+					 "ARQUIVO DE ENTRADA MUITO GRANDE"
+					 "FAVOR FORNECER OUTROS ARQUIVOS"
+			    return NULL;
+
+	inicializa dos campos:
+		p_nova_pagina->lotacao = 0;
+
+		for(int ind=0; ind <= (m-2); ind++)
+			p_nova_pagina->CHAVE[ind] = '/0';
+
+		for(int ind=0; ind <= (m-1); ind++)
+			p_nova_pagina->PONTEIRO[ind] = NULL;
+
+	retorna ponteiro para nova página
+		return p_nova_pagina;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,284 @@
+				Breakdown_style BUSCAR.txt
+
+
+Procedure BUSCAR
+
+
+
+
+Especificações (exigências do MAIN):
+
+	argumentos: ch_buscada
+
+	método: recursividade
+
+	retorno: ponteiro para página em que deve ser inserida ch_buscada
+
+	avisos em execução: Caso encontre a chave	=> chave duplicada 
+							=> imprime na tela: "Matricula: %d duplicada.\nMantida primeira ocorrência" 
+							=> valor de retorno: NULL
+
+
+
+Pressupostos (exigências deste procedure):
+
+	ch_buscada: variável tipo array de char (string) finalizada com '/0'
+
+	record pagina possui: 	chaves (existe sempre pelo menos a primeira chave)
+				1 ponteiro à esquerda (associado à primeira chave)
+				m-1 ponteiros à direita (1 associado a cada chave)
+
+	variáveis globais: ponteiro para página raiz
+			   ordem da matriz (m)
+
+
+
+Breakdown style: algoritmo BUSCAR
+
+
+
+
+Prototipo:	*pagina	BUSCAR(char *ch_buscada)
+
+
+
+Descrição:
+
+
+	Cada chamada recebe ponteiro para uma página a ser verificada (começa com a raiz - variável global),
+faz uma busca dentro da página recebida, comparando ch_buscada com chaves da página.
+	Faz uma nova chamada (recursiva) com algum ponteiro (descendente da página recebida).
+
+	Condições de parada:		
+
+		Duplicidade (chave encontrada)
+		
+		Atingiu nível de folha (próximo ponteiro é NULL)
+
+
+
+		Ponteiro NULL	=> não há mais para onde descer (atingiu nível das folhas)
+				=> a página em que deve ocorrer a inserção é a página atual (que contém o ponteiro NULL)
+				=> retorne o ponteiro que aponta para a página atual (recebido como argumento)
+				=> pode-se utilizar "return NULL" para o caso de duplicidade
+
+	Valores de retorno:
+				
+		Se atingiu nível folha: retorne o ponteiro recebido como argumento
+		Se encontrou a chave: retorne NULL
+		A chamada anterior deve retornar:
+			 O ponteiro válido (se mudasse esse valor, perderíamos a página correta); ou 
+			 NULL (no caso de duplicidade)
+		Portanto, toda chamada retorna o valor de retorno da chamada subsequente
+				
+		Note que o ponteiro retornado (não nulo) sempre aponta para uma página folha
+		
+
+Algoritmo de BUSCAR:
+
+
+
+	recebe ponteiro para pagina
+	busca dentro da pagina
+	chama BUSCAR com outro ponteiro
+	
+	
+	
+==================================================================================================================================	
+	
+	
+	
+	recebe ponteiro para pagina
+	verifica ponteiro recebido
+		NULL => retorna NULL (caso de duplicidade)
+		ponteiro válido:
+			busca dentro da pagina apontada
+			chama BUSCAR com outro ponteiro
+			retorne o que a nova chamada retornou
+	
+	
+	
+==================================================================================================================================
+	
+	
+	
+	recebe ponteiro para pagina
+	verifica ponteiro recebido
+		NULL => retorna NULL (caso de duplicidade)
+		ponteiro válido:
+			busca dentro da pagina apontada (existem apenas 3 possibilidades):
+				chave da pagina = ch_buscada
+				chave da pagina > ch_buscada
+				chave da pagina < ch_buscada
+				
+			chama BUSCAR com outro ponteiro
+			retorne o que a nova chamada retornou
+	
+	
+	
+==================================================================================================================================	
+	
+	
+	
+	recebe ponteiro para pagina
+	verifica ponteiro recebido
+		NULL => retorna NULL (caso de duplicidade)
+		ponteiro válido:
+			busca dentro da pagina apontada:
+
+				a) chave da pagina = ch_buscada
+					aviso de duplicidade na tela; e
+					return NULL
+
+
+				b) chave da pagina > ch_buscada
+					verifique se é a primeira chave
+						
+						b1) É a primeira chave
+
+						se ponteiro à esquerda da chave atual != NULL
+							Nova chamada(*) de BUSCAR. Argumento: ponteiro à esquerda da chave atual
+						senão (chegou no nível de folha)
+							return ponteiro recebido como argumento	
+						
+						b2) Nâo é a primeira chave (existe chave anterior)			
+
+						se ponteiro à direita da chave anterior != NULL
+							Nova chamada(*) de BUSCAR. Argumento: ponteiro à direita da chave anterior
+						senão (chegou no nível de folha)
+							return ponteiro recebido
+		
+			
+				c) chave da pagina < ch_buscada
+					vá para próxima chave (ainda na mesma chamada, mesmo ponteiro recebido)
+
+
+OBSERVAÇÃO:	fim das chaves	=> ch_buscada é maior que todas
+				=> Nova chamada de BUSCAR. Argumento: ponteiro à direita da chave anterior
+				=> esse caso pode ser tratado em uma das verificações acima
+
+(*) se retorno da chamada for NULL => retorne NULL
+    se retonro != NULL => retorne o que recebeu
+
+    Portanto, sempre retorna o retorno da nova chamada.	
+	
+	
+	
+==================================================================================================================================	
+	
+	
+	
+	recebe ponteiro para pagina
+	verifica ponteiro recebido
+		NULL => retorna NULL (caso de duplicidade)
+		ponteiro válido:
+			loop de busca dentro da página apontada:						
+							
+				a) chave da pagina atual = ch_buscada
+					aviso de duplicidade na tela; e
+					return NULL
+
+
+				b) chave da pagina atual > ch_buscada
+					verifique se é a primeira chave
+						
+						b1) É a primeira chave (sempre primeira chave != '/0')
+
+							se ponteiro à esquerda da chave atual != NULL
+								return = Nova chamada de BUSCAR. Argumento: ponteiro à esquerda da chave atual
+							senão (chegou no nível de folha)
+								return = ponteiro recebido como argumento	
+						
+						b2) Nâo é a primeira chave (sempre existe chave e ponteiro anteriores, mas deve-se verificar se chave atual == '/0')			
+							verifique se é o fim das chaves
+						
+								b2.1) chave atual == '/0' (fim das chaves)
+								
+									b2.1.1) se ponteiro à direita da chave anterior != NULL
+										return = Nova chamada de BUSCAR. Argumento: ponteiro à direita da chave anterior
+									b2.1.2) senão (chegou no nível de folha)
+										return = return ponteiro recebido
+
+						se chave atual != '/0'
+							
+							
+							
+							
+							
+							
+			
+				c) chave da pagina atual < ch_buscada
+					verifique se é o fim das chaves
+	
+						c1) chave atual == '/0' (fim das chaves)
+								
+							b2.1.1) se ponteiro à direita da chave anterior != NULL
+								return = Nova chamada de BUSCAR. Argumento: ponteiro à direita da chave anterior
+							b2.1.2) senão (chegou no nível de folha)
+								return = return ponteiro recebido
+
+						c2) chave atual != '/0' 
+							verifica se pode aumentar índice (percorrimento das chaves) (**):
+
+								c2.1) É o caso de ind < m-2
+									ind++ (ainda na mesma chamada, mesmo ponteiro recebido)
+								
+								c2.2) É o caso em que ind == m-2
+									se ponteiro à direita da chave atual != NULL
+										return = Nova chamada de BUSCAR. Argumento: ponteiro à direita da chave atual
+									senão (chegou no nível de folha)
+										return = ponteiro recebido como argumento
+
+
+ (**) ordem m	=> máximo m ponteiros
+		=> máximo m-1 chaves
+		Como índices de arrays começam com zero:
+		=> maior índice: m-2
+	
+	
+	
+==================================================================================================================================	
+	
+	
+	
+	
+
+
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
